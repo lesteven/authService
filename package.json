@@ -1,0 +1,26 @@
+{
+  "name": "authService",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/index.js",
+  "scripts": {
+    "server": "DEBUG=http nodemon",
+    "prod": "NODE_ENV=production node ./src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lesteven/authService.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lesteven/authService/issues"
+  },
+  "homepage": "https://github.com/lesteven/authService#readme",
+  "dependencies": {
+    "debug": "^4.1.1",
+    "express": "^4.16.4",
+    "passport-jwt": "^4.0.0"
+  }
+}
