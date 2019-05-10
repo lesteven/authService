@@ -1,12 +1,19 @@
 const express = require('express');
-const http = require('http');
 const debug = require('debug')('http');
 
+const serverSetup = require('./setup/serverSetup');
+const passportSetup = require('./setup/passportSetup');
+const apiRoutes = require('./routes/apiRoutes');
+
 const app = express();
+
+serverSetup(app);
 
 app.get('/', (req,res) => {
   res.send('Hello World!\n');
 })
+
+app.use('/api', apiRoutes);
 
 
 if (app.get('env') === 'development') {

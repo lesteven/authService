@@ -2,7 +2,6 @@ const debug = require('debug')('http');
 
 // responses return function in order to handle errors
 
-
 function sendError(res, status, message) {
   return res.status(status).json({
     status,

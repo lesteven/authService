@@ -1,6 +1,6 @@
 const passport = require('passport');
 const session = require('express-session');
-const strategy = require('passport-local');
+const debug = require('debug')('http');
 
 const passportSetup = (app) => {
 
@@ -9,8 +9,9 @@ const passportSetup = (app) => {
     secret: 'testing!',
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: true }
+    //cookie: { secure: true }
   }));
+
   app.use(passport.initialize());
   app.use(passport.session());
 
