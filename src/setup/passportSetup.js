@@ -1,11 +1,24 @@
 const passport = require('passport');
 const session = require('express-session');
+const CassandraStore = require('cassandra-store');
 const debug = require('debug')('http');
+const secret = require('../../config').secret;
 
 const passportSetup = (app) => {
+  const options = {
+    table: "sessions",
+    client: null,
+    clientOptions: {
+      contactPoints: [ 'localhost' ],
+      keyspace: 'users',
+      queryOptions: {
+        prepare: true
+      }
+    }
+  };
 
-  //app.use(session(sess));
-  app.use(session({ 
+  app.use(session({
+    store: new CassandraStore(options),
     secret: 'testing!',
     resave: false,
     saveUninitialized: true,
