@@ -8,11 +8,11 @@ passportSetup(cookies);
 cookies.route('/')
   .get((req,res) => {
     debug('sessionId: ', req.sessionID);
-    res.send('Hello Users!\n'); 
+    res.send('Hello Cookies!\n'); 
   })
   
   .post((req,res) => {
-    res.send('Post Users!\n');
+    res.send('Post Cookies!\n');
   });
 
 

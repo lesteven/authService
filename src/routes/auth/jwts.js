@@ -27,11 +27,11 @@ passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
 
 jwts.route('/')
   .get((req,res) => {
-    res.send('Hello Users!\n'); 
+    res.send('Hello Jwts!\n'); 
   })
   
   .post((req,res) => {
-    res.send('Post Users!\n');
+    res.send('Post Jwts!\n');
   });
 
 

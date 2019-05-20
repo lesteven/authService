@@ -1,16 +1,17 @@
 const express = require('express');
 const passport = require('passport');
 const debug = require('debug')('http');
+const passportSetup = require('../../setup/passportSetup');
 const regStrategy = require('../../utils/auth');
 const sendSuccess = require('../../utils/serverResponse').sendSuccess;
 const sendError = require('../../utils/serverResponse').sendError;
 
 const users = express.Router();
-
+passportSetup(users);
 
 users.route('/')
   .get((req, res) => {
-    res.send('Hello Users2!\n'); 
+    res.send('Hello Users!\n'); 
   })
   
   .post((req, res, next) => {
