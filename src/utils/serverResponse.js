@@ -24,7 +24,7 @@ function sendSuccess(res, status, data) {
 };
 
 module.exports = {
-  sendError: sendError,
-  sendErrorCB: sendErrorCB,
-  sendSuccess: sendSuccess,
+  sendError,
+  sendErrorCB,
+  sendSuccess
 }

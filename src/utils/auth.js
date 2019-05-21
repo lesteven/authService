@@ -1,8 +1,31 @@
-const sendError = require('./serverResponse');
+const { hashPassword } = require('./encrypt');
+const { insertUser } = require('./passportQueries');
+const {
+  sendError,
+  sendErrorCB,
+  sendSuccess
+} = require('./serverResponse');
+
+
+const createAccount = async (res, data) => {
+  const password = await hashPassword(data.password);
+  const userData = {
+    ...data,
+    password
+  }
+  return insertUser(userData);
+}
+
 
 const handleRequest = async (res, req, queriedData) => {
-
-
+  if (user) {
+    sendError(res, 400, 'User already exist');
+  }
+  if (!user) {
+    const createAccount = await createAccount(res, req.body);
+    loginUser(req, res, );
+  }
+  return sendError(res, 500, 'There was a server error');
 };
 
 
@@ -13,7 +36,7 @@ const regStrategy = (passport, res) => {
       debug('req.body: ', req.body);
         
       const finishedQuery = await registerUser(req.body)
-        .catch();
+        .catch(sendErrorCB(res, 500, 'There was a sever Error'));
 
       if (finishedQuery) {
         handleRequest(res, req, finishedQuery);
@@ -22,36 +45,4 @@ const regStrategy = (passport, res) => {
   ));
 };
 
-const testReg = (passport, res) => {
-  passport.use('register', new Strategy(
-    { passReqToCallback: true },
-    (req => {
-      if (err) {
-        debug('first error');
-          sendError(500, "There was an error");
-      }
-      if (!user) {
-        debug('second error');
-        res.status(400).json({
-          status: 400,
-          error: "User already exist",
-        });
-      }
-      /*
-      req.login(user, function(err) {
-        if (err) {
-          res.status(500).json({
-            status: 500,
-            error: "There was an error",
-          });
-        }
-      });
-      */
-      // debug(req.login + "");
-      res.status(201).json({
-        status: 201,
-        data: "User created"
-      });
-    })
-  ))
-}
+module.exports = regStrategy;
