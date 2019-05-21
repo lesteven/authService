@@ -4,7 +4,11 @@ const CassandraStore = require('cassandra-store');
 const debug = require('debug')('http');
 const secret = require('../../config').secret;
 
+
+
 const passportSetup = (app) => {
+  const production = process.env.NODE_ENV === 'production';
+
   const options = {
     table: "sessions",
     client: null,
@@ -19,10 +23,10 @@ const passportSetup = (app) => {
 
   app.use(session({
     store: new CassandraStore(options),
-    secret: 'testing!',
+    secret: secret,
     resave: false,
     saveUninitialized: true,
-    //cookie: { secure: true }
+    cookie: { secure: production }
   }));
 
   app.use(passport.initialize());
