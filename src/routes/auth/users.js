@@ -16,11 +16,11 @@ users.route('/')
   
   .post((req, res, next) => {
     // create register strategy before able to use
-    //regStrategy(passport, res);
+    regStrategy(passport, res);
 
     // pass params to authenticate for custom callback
-    //passport.authenticate('register')(req, res, next);
-    sendSuccess(res, 201, "User registered"); 
+    passport.authenticate('register')(req, res, next);
+    // sendSuccess(res, 201, "User registered"); 
   })
 
   .delete((req, res) => {
