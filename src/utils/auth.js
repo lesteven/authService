@@ -1,5 +1,6 @@
+const Strategy = require('passport-local');
 const { hashPassword } = require('./encrypt');
-const { insertUser } = require('./passportQueries');
+const { insertUser, userAvail } = require('./passportQueries');
 const {
   sendError,
   sendErrorCB,
@@ -35,7 +36,7 @@ const regStrategy = (passport, res) => {
     (async (req) => {
       debug('req.body: ', req.body);
         
-      const finishedQuery = await registerUser(req.body)
+      const finishedQuery = await userAvail(req.body)
         .catch(sendErrorCB(res, 500, 'There was a sever Error'));
 
       if (finishedQuery) {

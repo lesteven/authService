@@ -19,12 +19,12 @@ const insertUser = async (data) => {
   console.log(result);
 }
 
-const userAvil = async (data) => {
+const userAvail = async (data) => {
   const query = 'SELECT username FROM accounts \
-    where username = ?';
+    WHERE username = ?';
   const params = [ data.username ];
   const result = await client.execute(query, params);
-  return result;
+  return result.rowLength === 0;
 }
 
 module.exports = {
