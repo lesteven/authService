@@ -11,9 +11,11 @@ const client = new cassandra.Client({
 const insertUser = async (data) => {
   const query = 'INSERT INTO accounts \
     (id, created_at, password, username) VALUES (?, ?, ?, ?)';
+
   const { username, password } = data;
   const hashedPw = await hashPassword(password);
   const params = [uuid(), Date.now(), hashedPw, username];
+
   console.log(params);
   const result = await client.execute(query, params);
   console.log(result);
@@ -28,6 +30,7 @@ const userAvail = async (data) => {
 }
 
 module.exports = {
+  client,
   insertUser,
   userAvail
 }

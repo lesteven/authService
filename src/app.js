@@ -22,9 +22,5 @@ if (app.get('env') === 'development') {
   debug('Production mode!');
 }
 
-const port = process.env.PORT || 3000;
 
-app.listen(port, () => {
-  debug(`Listening on port ${port}`);
-});
-
+module.exports = app;
