@@ -8,5 +8,4 @@ describe('server', () => {
       .get('/')
       .expect(200)
   })
-
 });
