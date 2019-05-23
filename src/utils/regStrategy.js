@@ -1,4 +1,5 @@
 const Strategy = require('passport-local');
+const debug = require('debug')('http');
 const { hashPassword } = require('./encrypt');
 const { insertUser, userAvail } = require('./passportQueries');
 const {
@@ -6,8 +7,9 @@ const {
   sendErrorCB,
   sendSuccess
 } = require('./serverResponse');
+const { loginUser } = require('./logStrategy');
 
-
+// hashed password replaces password in req.body
 const createAccount = async (res, data) => {
   const password = await hashPassword(data.password);
   const userData = {
@@ -24,7 +26,7 @@ const handleRequest = async (res, req, queriedData) => {
   }
   if (!user) {
     const createAccount = await createAccount(res, req.body);
-    loginUser(req, res, );
+    loginUser(req, res, createAccount);
   }
   return sendError(res, 500, 'There was a server error');
 };
