@@ -7,7 +7,9 @@
     "server": "DEBUG=http nodemon",
     "prod": "NODE_ENV=production node ./src/server.js",
     "int-test": "jest test/intTest",
+    "intw": "jest test/intTest --watch",
     "unit-test": "jest -c unitTest.json ",
+    "unitw": "jest -c unitTest.json --watch",
     "smoke-test": "jest test/smokeTest --force-exit"
   },
   "repository": {
