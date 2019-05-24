@@ -2,7 +2,7 @@ const express = require('express');
 const passport = require('passport');
 const debug = require('debug')('http');
 const passportSetup = require('../../setup/passportSetup');
-const regStrategy = require('../../utils/auth');
+const regStrategy = require('../../utils/regStrategy');
 const asyncWrap = require('../../utils/asyncWrap');
 const {
   sendSuccess,
@@ -17,21 +17,25 @@ const users = express.Router();
 passportSetup(users);
 
 users.route('/')
-  .get((req, res) => {
+  .get(asyncWrap(async (req, res, next) => {
     res.send('Hello Users!\n'); 
-  })
-  
-  .post((req, res, next) => {
+  }))
+  .post(asyncWrap(async (req, res, next) => {
     // create register strategy before able to use
     regStrategy(passport, res);
 
     // pass params to authenticate for custom callback
     passport.authenticate('register')(req, res, next);
-  })
-
-  .delete((req, res) => {
+  }))
+/*
+  .post(asyncWrap(async (req, res, next) => {
+    debug(req.body);
+    sendSuccess(res, 200, 'hello!');
+  }))
+  */
+  .delete(asyncWrap(async (req, res, next) => {
     sendError(res, 404, 'no@!');
-  })
+  }))
 
 const data = {
   username: 'hello',
