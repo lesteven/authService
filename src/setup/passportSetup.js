@@ -32,11 +32,13 @@ const passportSetup = (app) => {
   app.use(passport.initialize());
   app.use(passport.session());
 
-  passport.serializeUser((user, done) => {
-    done(null, user.id);
+  // value of user is passed on value that is passed in through
+  // req.login (in logStrategy)
+  passport.serializeUser((username, done) => {
+    done(null, username);
   });
 
-  passport.deserializeUser((id, done) => {
+  passport.deserializeUser((username, done) => {
     console.log('deserialize user');
   });
 };
