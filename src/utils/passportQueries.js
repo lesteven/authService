@@ -37,7 +37,18 @@ const deleteUser = (data) => {
     username = ?'
   const params = [ data.username ];
   return client.execute(query, params);
-}
+};
+
+const deserialize = (username, done) => {
+  const query = 'SELECT username FROM accounts \
+    WHERE username = ?';
+  const params = [ username ];
+  client.execute(query, params, function(err, result) {
+    const user = result.rows[0];
+    console.log(user);
+    done(err, user);
+  });
+};
 
 module.exports = {
   client,
