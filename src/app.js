@@ -5,6 +5,7 @@ const serverSetup = require('./setup/serverSetup');
 const passportSetup = require('./setup/passportSetup');
 const apiRoutes = require('./routes/apiRoutes');
 const { sendError } = require('./utils/serverResponse');
+const errHandle = require('./routes/errHandle');
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use('*', (req, res) => {
   sendError(res, 404, 'This page does not exist'); 
 });
 
+app.use(errHandle);
 
 if (app.get('env') === 'development') {
   debug('Development mode!');
