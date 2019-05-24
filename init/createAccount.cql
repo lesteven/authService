@@ -6,5 +6,5 @@ CREATE TABLE users.accounts (
     username text,
     password text,
     created_at timestamp, 
-    PRIMARY KEY(username, id)
+    PRIMARY KEY(username)
 );

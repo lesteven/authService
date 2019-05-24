@@ -1,13 +1,18 @@
 const app = require('../../src/app');
 const request = require('supertest');
-
+const {
+  insertUser
+} = require('../../src/utils/passportQueries');
 
 const data = {
   username: 'hello',
   password: 'lala123',
 }
 
+
+
 describe('login service', () => {
+  /*
   it('log user in if correct user and pw', () => {
     return request(app)
       .post('/api/sessions')
@@ -28,5 +33,9 @@ describe('login service', () => {
       .send(data)
       .set('Accept', 'application/json')
       .expect(400)
+  });
+  */
+  it('',() => {
+
   });
 });
