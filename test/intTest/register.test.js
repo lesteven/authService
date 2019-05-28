@@ -4,16 +4,7 @@ const {
   insertUser,
   deleteUser
 } = require('../../src/utils/passportQueries');
-
-const existUser = {
-  username: 'helloExists',
-  password: 'adasdas'
-}
-
-const newUser = {
-  username: 'hello',
-  password: 'lala123',
-}
+const { existUser, newUser } = require('./userData');
 
 beforeAll(() => {
   insertUser(existUser);
