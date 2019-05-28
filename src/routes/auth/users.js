@@ -1,16 +1,15 @@
 const express = require('express');
 const passport = require('passport');
 const debug = require('debug')('http');
-const passportSetup = require('../../setup/passportSetup');
 const regStrategy = require('../../utils/regStrategy');
 const asyncWrap = require('../../utils/asyncWrap');
 const {
   sendSuccess,
   sendError
 } = require('../../utils/serverResponse');
+const sameUser = require('../../utils/sameUser');
 
 const users = express.Router();
-passportSetup(users);
 
 users.route('/')
   .get(asyncWrap(async (req, res, next) => {
@@ -25,10 +24,13 @@ users.route('/')
     passport.authenticate('register')(req, res, next);
   }))
 
+
 users.route('/:username')
-  .delete(asyncWrap(async (req, res, next) => {
+  .delete(sameUser, asyncWrap(async (req, res, next) => {
     console.log(req.isAuthenticated());
-    console.log(req.body);
+    console.log('req.body', req.body);
+    console.log('req.params', req.params);
+    console.log('req.user', req.user.username);
     sendError(res, 404, 'no@!');
   }))
 
