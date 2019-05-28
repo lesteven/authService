@@ -1,8 +1,9 @@
 #!/bin/bash
 
 
-curl -X DELETE localhost:3000/api/users/helloExists\
+curl -X DELETE localhost:3000/api/users/hey\
+    -b cookie-file.txt \
     -H 'Content-Type: application/json'\
-    -d '{"username":"helloExists","password":"123"}'\
+    -d '{"username":"hey","password":"123"}'\
     -v
 
