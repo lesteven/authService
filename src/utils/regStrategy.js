@@ -9,9 +9,9 @@ const {
 const { loginUser } = require('./logStrategy');
 
 
-const handleRequest = async (res, req, userAvail) => {
-  debug('userAvail: ', userAvail);
-  if (userAvail) {
+const handleRequest = async (res, req, userDontExist) => {
+  debug('userDontExist: ', userDontExist);
+  if (userDontExist) {
     const createAccount = await insertUser(req.body);
     loginUser(req, res);
   } else {
