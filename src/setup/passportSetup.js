@@ -3,7 +3,7 @@ const session = require('express-session');
 const CassandraStore = require('cassandra-store');
 const debug = require('debug')('http');
 const secret = require('../../config').secret;
-
+const { deserialize } = require('../utils/passportQueries');
 
 
 const passportSetup = (app) => {
@@ -38,9 +38,7 @@ const passportSetup = (app) => {
     done(null, username);
   });
 
-  passport.deserializeUser((username, done) => {
-    console.log('deserialize user');
-  });
+  passport.deserializeUser(deserialize);
 };
 
 module.exports = passportSetup;

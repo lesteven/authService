@@ -13,7 +13,6 @@ const loginUser = (req, res) => {
       sendSuccess(res, 201, 'You have logged in');
     }
   })
-  //sendSuccess(res, 201, 'You are now logged in');
 }
 
 const logStrategy = (passport, res) => {

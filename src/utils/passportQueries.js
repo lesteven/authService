@@ -1,4 +1,5 @@
 const cassandra = require('cassandra-driver');
+const debug = require('debug')('http');
 const uuid = require('uuid/v4');
 const { hashPassword } = require('./encrypt');
 const config = require('../../config/index');
@@ -45,7 +46,7 @@ const deserialize = (username, done) => {
   const params = [ username ];
   client.execute(query, params, function(err, result) {
     const user = result.rows[0];
-    console.log(user);
+    debug('deserialize:', user);
     done(err, user);
   });
 };
@@ -55,5 +56,6 @@ module.exports = {
   insertUser,
   findUser,
   deleteUser,
-  userAvail
+  userAvail,
+  deserialize
 }

@@ -15,7 +15,6 @@ const handleRequest = async (res, req, userAvail) => {
     const createAccount = await insertUser(req.body);
     loginUser(req, res);
   } else {
-    debug('!!!!!!! user does not exist!');
     sendError(res, 400, 'User already exist');
   }
 };
