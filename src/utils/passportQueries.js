@@ -28,6 +28,13 @@ const findUser = (data) => {
   return client.execute(query, params);
 }
 
+const findUserAndPw = (data) => {
+  const query = 'SELECT * FROM accounts \
+    WHERE username = ?';
+  const params = [ data.username ];
+  return client.execute(query, params);
+}
+
 const userAvail = async (data) => {
   const result = await findUser(data);
   return result.rowLength === 0;
@@ -55,6 +62,7 @@ module.exports = {
   client,
   insertUser,
   findUser,
+  findUserAndPw,
   deleteUser,
   userAvail,
   deserialize
