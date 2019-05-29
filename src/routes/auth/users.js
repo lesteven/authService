@@ -8,6 +8,7 @@ const {
   sendError
 } = require('../../utils/serverResponse');
 const sameUser = require('../../utils/sameUser');
+const { deleteUser, logout } = require('../../utils/passportQueries');
 
 const users = express.Router();
 
@@ -27,11 +28,14 @@ users.route('/')
 
 users.route('/:username')
   .delete(sameUser, asyncWrap(async (req, res, next) => {
-    console.log(req.isAuthenticated());
-    console.log('req.body', req.body);
-    console.log('req.params', req.params);
-    console.log('req.user', req.user.username);
-    sendError(res, 404, 'no@!');
+    // save username to const to preserve username when logged out
+    // username needed to delete account
+    const user = {
+      username: req.user.username
+    }
+    logout(req, res);
+    await deleteUser(user);
+    sendSuccess(res, 200, 'Account has been deleted');
   }))
 
 module.exports = users;

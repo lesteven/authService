@@ -58,6 +58,12 @@ const deserialize = (username, done) => {
   });
 };
 
+const logout = (req, res) => {
+  req.logOut();
+  req.session.destroy();
+  res.clearCookie('connect.sid');
+}
+
 module.exports = {
   client,
   insertUser,
@@ -65,5 +71,6 @@ module.exports = {
   findUserAndPw,
   deleteUser,
   userAvail,
-  deserialize
+  deserialize,
+  logout
 }

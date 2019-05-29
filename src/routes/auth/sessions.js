@@ -3,17 +3,25 @@ const debug = require('debug')('http');
 const passport = require('passport');
 const { logStrategy } = require('../../utils/logStrategy');
 const asyncWrap = require('../../utils/asyncWrap');
+const sameUser = require('../../utils/sameUser');
+const {
+  sendSuccess,
+} = require('../../utils/serverResponse');
+const { logout } = require('../../utils/passportQueries');
 
 const sessions = express.Router();
 
 sessions.route('/')
-  .get((req,res) => {
-  })
-  
   .post(asyncWrap(async (req, res, next) => {
     logStrategy(passport, res);
     passport.authenticate('login')(req, res, next);
   }));
 
+sessions.route('/:username')
+  .delete(sameUser, asyncWrap(async (req, res, next) => {
+    logout(req, res);
+    sendSuccess(res, 200, 'You have logged out');
+  }));
+  
 
 module.exports = sessions;
