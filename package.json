@@ -10,7 +10,8 @@
     "intw": "jest test/intTest --watch",
     "unit-test": "jest -c unitTest.json ",
     "unitw": "jest -c unitTest.json --watch",
-    "smoke-test": "jest test/smokeTest --force-exit"
+    "smoke-test": "jest test/smokeTest --force-exit",
+    "cov": "jest --coverage"
   },
   "repository": {
     "type": "git",
