@@ -12,4 +12,15 @@ const sameUser = (req, res, next) => {
   }
 };
 
-module.exports = sameUser;
+const checkBody = (req, res, next) => {
+  if (!req.body.username || !req.body.password) {
+    sendError(res, 400, 'Must send username and password');
+  } else {
+    next();
+  }
+}
+
+module.exports = {
+  sameUser,
+  checkBody,
+}

@@ -7,7 +7,7 @@ const {
   sendSuccess,
   sendError
 } = require('../../utils/serverResponse');
-const sameUser = require('../../utils/sameUser');
+const { sameUser, checkBody } = require('../../utils/checks');
 const { deleteUser, logout } = require('../../utils/passportQueries');
 
 const users = express.Router();
@@ -17,7 +17,7 @@ users.route('/')
     res.send('Hello Users!\n'); 
   }))
 
-  .post(asyncWrap(async (req, res, next) => {
+  .post(checkBody, asyncWrap(async (req, res, next) => {
     // create register strategy before able to use
     regStrategy(passport, res);
 

@@ -3,7 +3,7 @@ const debug = require('debug')('http');
 const passport = require('passport');
 const { logStrategy } = require('../../utils/logStrategy');
 const asyncWrap = require('../../utils/asyncWrap');
-const sameUser = require('../../utils/sameUser');
+const { sameUser, checkBody } = require('../../utils/checks');
 const {
   sendSuccess,
 } = require('../../utils/serverResponse');
@@ -12,7 +12,7 @@ const { logout } = require('../../utils/passportQueries');
 const sessions = express.Router();
 
 sessions.route('/')
-  .post(asyncWrap(async (req, res, next) => {
+  .post(checkBody, asyncWrap(async (req, res, next) => {
     logStrategy(passport, res);
     passport.authenticate('login')(req, res, next);
   }));

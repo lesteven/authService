@@ -6,7 +6,6 @@ const passportSetup = require('./setup/passportSetup');
 const apiRoutes = require('./routes/apiRoutes');
 const { sendError } = require('./utils/serverResponse');
 const errHandle = require('./routes/errHandle');
-const lockedRoutes = require('./lockedRoutes/lockedRoutes');
 
 const app = express();
 
@@ -17,8 +16,10 @@ app.get('/', (req,res) => {
   res.send('Hello World!\n');
 })
 
+app.get('/err', (req, res) => {
+  throw new Error('thrown error');
+})
 app.use('/api', apiRoutes);
-app.use('/locked', lockedRoutes);
 
 app.use('*', (req, res) => {
   sendError(res, 404, 'This page does not exist'); 
