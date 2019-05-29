@@ -12,18 +12,19 @@ beforeAll(() => {
   insertUser(existUser);
 })
 
-afterEach(() => {
-  deleteUser(newUser);
-});
 
 afterAll(() => {
   clearSessions();
   deleteUser(existUser);
+  deleteUser(newUser);
 });
+
+//use agent to save cookies from logging in
+const agent = request.agent(app);
 
 describe('register service', () => {
   it('add user to db if user doesnt exist', () => {
-    return request(app)
+    return agent
       .post('/api/users')
       .send(newUser)
       .set('Accept', 'application/json')
@@ -35,24 +36,26 @@ describe('register service', () => {
       .send(existUser)
       .set('Accept', 'application/json')
       .expect(400)
-
   });
-  /*
+  it('should not delete other users', () => {
+    return agent
+      .delete(`/api/users/${existUser.username}`)
+      .expect(401)
+  });
   it('delete user if logged in', () => {
-    return request(app)
-      .delete(`/api/users/${data.username}`)
-      .send(data)
-      .set('Accept', 'application/json')
-      .expect(201)
+    return agent
+      .delete(`/api/users/${newUser.username}`)
+      .expect(200)
   });
-  */
 });
+
 
 describe('login service', () => {
   it('log user in if correct user and pw', () => {
-    return request(app)
+    return agent
       .post('/api/sessions')
       .send(existUser)
+      .expect('set-cookie', /connect.sid/)
       .set('Accept', 'application/json')
       .expect(201)
   });
@@ -70,4 +73,15 @@ describe('login service', () => {
       .set('Accept', 'application/json')
       .expect(400)
   });
+  it('should not delete other users', () => {
+    return agent
+      .delete(`/api/sessions/${newUser.username}`)
+      .expect(401)
+  });
+  it('delete user', () => {
+    return agent
+      .delete(`/api/sessions/${existUser.username}`)
+      .expect(200)
+  });
+  
 });
