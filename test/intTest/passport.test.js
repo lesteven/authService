@@ -3,11 +3,12 @@ const request = require('supertest');
 const {
   insertUser,
   deleteUser,
-  clearSessions,
 } = require('../../src/utils/passportQueries');
+const { clearSessions, clearUsers } = require('./dbSetup');
 const { existUser, existWrong, newUser } = require('./userData');
 
 beforeAll(() => {
+  clearUsers();
   insertUser(existUser);
 })
 
@@ -34,6 +35,7 @@ describe('register service', () => {
       .send(existUser)
       .set('Accept', 'application/json')
       .expect(400)
+
   });
   /*
   it('delete user if logged in', () => {
