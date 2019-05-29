@@ -13,3 +13,38 @@ describe('unknown routes', () => {
       })
   });
 })
+
+const err = {
+  hello: 'error'
+};
+
+describe('throw error', () => {
+  it('when given empty body to /api/users', () => {
+    return request(app)
+      .post('/api/users')
+      .send({})
+      .set('Accept', 'application/json')
+      .expect(400)
+  })
+  it('when given wrong params to /api/users', () => {
+    return request(app)
+      .post('/api/users')
+      .send(err)
+      .set('Accept', 'application/json')
+      .expect(400)
+  })
+  it('when given empty body to /api/sessions', () => {
+    return request(app)
+      .post('/api/sessions')
+      .send({})
+      .set('Accept', 'application/json')
+      .expect(400)
+  })
+  it('when given wrong params to /api/sessions', () => {
+    return request(app)
+      .post('/api/sessions')
+      .send(err)
+      .set('Accept', 'application/json')
+      .expect(400)
+  })
+});

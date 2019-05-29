@@ -10,13 +10,7 @@ const clearUsers = () => {
   return client.execute(query);
 }
 
-const getSessionId = () => {
-  const query = 'SELECT * FROM sessions';
-  return client.execute(query);
-}
-
 module.exports = {
   clearSessions,
   clearUsers,
-  getSessionId,
 }
