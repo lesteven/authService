@@ -12,8 +12,16 @@ const { loginUser } = require('./logStrategy');
 const handleRequest = async (res, req, userDontExist) => {
   debug('userDontExist: ', userDontExist);
   if (userDontExist) {
-    const createAccount = await insertUser(req.body);
-    loginUser(req, res);
+    const createAccount = await insertUser(req.body)
+      .catch((e) => {
+        console.log(e);
+      });
+
+    if (createAccount) {
+      loginUser(req, res);
+    } else {
+      sendError(res, 500, 'There was a system error');
+    }
   } else {
     sendError(res, 400, 'User already exist');
   }
@@ -27,9 +35,16 @@ const regStrategy = (passport, res) => {
       debug('req.body: ', req.body);
         
       const finishedQuery = await userAvail(req.body)
-        .catch(sendErrorCB(res, 500, 'There was a server Error'));
+        .catch((e) => {
+          console.log(e);
+        });
 
-      handleRequest(res, req, finishedQuery);
+      // if error, finishedQuery will be undefined
+      if (finishedQuery !== undefined) {
+        handleRequest(res, req, finishedQuery);
+      } else {
+        sendError(res, 500, 'There was a system error');
+      }
     })
   ));
 };

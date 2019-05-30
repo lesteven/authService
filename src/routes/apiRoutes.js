@@ -3,6 +3,7 @@ const debug = require('debug')('http');
 
 const users = require('./auth/users');
 const sessions = require('./auth/sessions');
+const testRoute = require('./testRoute');
 
 
 const apiRoutes = express.Router();

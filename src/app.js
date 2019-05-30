@@ -4,7 +4,7 @@ const debug = require('debug')('http');
 const serverSetup = require('./setup/serverSetup');
 const passportSetup = require('./setup/passportSetup');
 const apiRoutes = require('./routes/apiRoutes');
-const { sendError } = require('./utils/serverResponse');
+const { sendSuccess, sendError } = require('./utils/serverResponse');
 const errHandle = require('./routes/errHandle');
 
 const app = express();
@@ -12,13 +12,11 @@ const app = express();
 serverSetup(app);
 passportSetup(app);
 
-app.get('/', (req,res) => {
-  res.send('Hello World!\n');
-})
 
-app.get('/err', (req, res) => {
-  throw new Error('thrown error');
-})
+app.get('/', (req, res) => {
+  sendSuccess(res, 200, 'Welcome to auth micoservice');
+});
+
 app.use('/api', apiRoutes);
 
 app.use('*', (req, res) => {

@@ -21,10 +21,13 @@ const loginUser = (req, res) => {
 
 const handleRequest = async (req, res, queriedData) => {
   const data = queriedData.rows[0];
-
   if (data) {
+    // returns true if correct, otherwise false
+    // returns undefined if error
     const valid = await validatePassword(req.body.password, 
-      data.password);
+      data.password).catch((e) => {
+        console.log(e);
+      });
     if (valid) {
       loginUser(req, res);
     } else {
@@ -42,10 +45,14 @@ const logStrategy = (passport, res) => {
     },
     (async (req) => {
       const finishedQuery = await findUserAndPw(req.body)
-        .catch(sendErrorCB(res, 500, 'There was a server Error'));
+        .catch((e) => {
+          console.log(e);
+        });
 
       if (finishedQuery) {
         handleRequest(req, res, finishedQuery);
+      } else {
+        sendError(res, 500, 'There was a system error');
       }
     })
   ));
