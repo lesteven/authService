@@ -12,6 +12,7 @@ function sendError(res, status, message) {
 function sendErrorCB(res, status, message) {
   return ((err) => {
     debug(err);
+    logger.error(err);
     return sendError(res, status, message);
   });
 };

@@ -1,7 +1,7 @@
 const express = require('express');
 const debug = require('debug')('http');
 
-const serverSetup = require('./setup/serverSetup');
+const { serverSetup } = require('./setup/serverSetup');
 const passportSetup = require('./setup/passportSetup');
 const apiRoutes = require('./routes/apiRoutes');
 const { sendSuccess, sendError } = require('./utils/serverResponse');
