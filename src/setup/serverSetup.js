@@ -5,15 +5,15 @@ const winston = require('winston');
 const { createLogger, format, transports } = winston;
 const { combine, timestamp, label, printf } = format;
 
-const myFormat = printf(({ level, message, label, timestamp }) => {
-  return `${timestamp} [${label}] ${level}: ${message}`;
+const myFormat = printf((info) => {
+  return JSON.stringify(info);
 });
 
 const logger = createLogger({
   format: combine(
     label({ label: 'authService' }),
     timestamp(),
-    myFormat
+    myFormat,
   ),
   transports: [
     new transports.File({ filename: 'error.log', level: 'error'
@@ -22,15 +22,19 @@ const logger = createLogger({
   ]
 });
 
-logger.info('test info');
-logger.error('test error');
+// overwrites the stream.write function in morgan
+// writes to winston log files instead of process.stdout
+logger.stream = {
+  write: function(message, encoding) {
+    logger.info(message);
+  }
+}
 
 const serverSetup = (app) => {
   if (app.get('env') === 'development') {
-    //app.use(morgan('dev'));
-    logger.add(new transports.Console({
-      format: format.simple()
-    }));
+    app.use(morgan('dev'));
+  } else {
+    app.use(morgan('combined', { "stream": logger.stream }));
   }
 
   app.use(bodyParser.json());

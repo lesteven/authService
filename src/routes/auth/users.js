@@ -25,6 +25,10 @@ users.route('/')
     passport.authenticate('register')(req, res, next);
   }))
 
+users.route('/err')
+  .get(asyncWrap(async (req, res, next) => {
+    await Promise.reject('rejected mate');
+  }));
 
 users.route('/:username')
   .delete(sameUser, asyncWrap(async (req, res, next) => {
