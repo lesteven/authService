@@ -37,7 +37,8 @@
     "passport-local": "^1.0.0",
     "pg-promise": "^8.6.5",
     "uuid": "^3.3.2",
-    "winston": "^3.2.1"
+    "winston": "^3.2.1",
+    "winston-daily-rotate-file": "^3.9.0"
   },
   "devDependencies": {
     "jest": "^24.8.0",
