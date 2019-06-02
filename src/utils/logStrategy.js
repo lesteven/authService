@@ -7,6 +7,7 @@ const {
   sendSuccess
 } = require('./serverResponse');
 const { validatePassword } = require('./encrypt');
+const { logger } = require('../setup/serverSetup');
 
 const loginUser = (req, res) => {
   const user = req.body.username;
@@ -26,7 +27,7 @@ const handleRequest = async (req, res, queriedData) => {
     // returns undefined if error
     const valid = await validatePassword(req.body.password, 
       data.password).catch((e) => {
-        console.log(e);
+        logger.error(e);
       });
     if (valid) {
       loginUser(req, res);
@@ -46,7 +47,7 @@ const logStrategy = (passport, res) => {
     (async (req) => {
       const finishedQuery = await findUserAndPw(req.body)
         .catch((e) => {
-          console.log(e);
+          logger.error(e);
         });
 
       if (finishedQuery) {

@@ -7,14 +7,14 @@ const {
   sendSuccess
 } = require('./serverResponse');
 const { loginUser } = require('./logStrategy');
-
+const { logger } = require('../setup/serverSetup');
 
 const handleRequest = async (res, req, userDontExist) => {
   debug('userDontExist: ', userDontExist);
   if (userDontExist) {
     const createAccount = await insertUser(req.body)
       .catch((e) => {
-        console.log(e);
+        logger.error(e);
       });
 
     if (createAccount) {
@@ -36,7 +36,7 @@ const regStrategy = (passport, res) => {
         
       const finishedQuery = await userAvail(req.body)
         .catch((e) => {
-          console.log(e);
+          logger.error(e);
         });
 
       // if error, finishedQuery will be undefined
