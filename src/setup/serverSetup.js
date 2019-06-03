@@ -1,12 +1,27 @@
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const winston = require('winston');
+require('winston-daily-rotate-file');
 
 const { createLogger, format, transports } = winston;
 const { combine, timestamp, label, printf } = format;
 
 const myFormat = printf((info) => {
   return JSON.stringify(info);
+});
+
+// default datePattern is YYYY-MM-DD
+const transportErr = new transports.DailyRotateFile({
+  filename: './logs/error/error.log',
+  level: 'error',
+  maxSize: '20m',
+  maxFiles: '14d'
+});
+// default level is info
+const transportAll = new transports.DailyRotateFile({
+  filename: './logs/combined/combined.log',
+  maxSize: '20m',
+  maxFiles: '14d'
 });
 
 const logger = createLogger({
@@ -16,9 +31,8 @@ const logger = createLogger({
     myFormat,
   ),
   transports: [
-    new transports.File({ filename: 'error.log', level: 'error'
-    }),
-    new transports.File({ filename: 'combined.log' }),
+    transportErr,
+    transportAll
   ]
 });
 
