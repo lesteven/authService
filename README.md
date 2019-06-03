@@ -27,9 +27,17 @@ Reasons to choose Redis
 
 Paths:
 
-api/users
+/api/users
+* post -> create user
 
-api/sessions
+/api/users/:username
+* delete -> delete user
+
+/api/sessions
+* post -> create session
+
+/api/sessions/:username
+* delete -> delete session
 
 
 Custom RESTful passport strategy
