@@ -13,10 +13,6 @@ const { deleteUser, logout } = require('../../utils/passportQueries');
 const users = express.Router();
 
 users.route('/')
-  .get(asyncWrap(async (req, res, next) => {
-    res.send('Hello Users!\n'); 
-  }))
-
   .post(checkBody, asyncWrap(async (req, res, next) => {
     // create register strategy before able to use
     regStrategy(passport, res);
@@ -25,10 +21,12 @@ users.route('/')
     passport.authenticate('register')(req, res, next);
   }))
 
+/*
 users.route('/err')
   .get(asyncWrap(async (req, res, next) => {
     await Promise.reject('rejected mate');
   }));
+  */
 
 users.route('/:username')
   .delete(sameUser, asyncWrap(async (req, res, next) => {
