@@ -1,10 +1,16 @@
 
-kind: pipline
+kind: pipeline
 name: default
 
 steps:
 - name: test
   image: node
   commands:
-    - npm install
-    - npm run unit-test
+  - npm install
+  - npm run unit-test
+
+trigger:
+  branch:
+  - master
+  event:
+  - push
