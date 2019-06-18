@@ -1,7 +1,7 @@
 const express = require('express');
 const debug = require('debug')('http');
 
-const { serverSetup } = require('./setup/serverSetup');
+const { serverSetup, logger } = require('./setup/serverSetup');
 const passportSetup = require('./setup/passportSetup');
 const apiRoutes = require('./routes/apiRoutes');
 const { sendSuccess, sendError } = require('./utils/serverResponse');
@@ -29,6 +29,7 @@ if (app.get('env') === 'development') {
   debug('Development mode!');
 } else {
   debug('Production mode!');
+  logger.info('Production mode!');
 }
 
 
