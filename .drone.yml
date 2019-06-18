@@ -1,0 +1,10 @@
+
+kind: pipline
+name: default
+
+steps:
+- name: test
+  image: node
+  commands:
+    - npm install
+    - npm run unit-test
