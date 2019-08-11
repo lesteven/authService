@@ -2,7 +2,7 @@ const passport = require('passport');
 const session = require('express-session');
 const CassandraStore = require('cassandra-store');
 const debug = require('debug')('http');
-const secret = require('../../config').secret;
+const secret = require('../../configFile').secret;
 const { deserialize } = require('../utils/passportQueries');
 
 
