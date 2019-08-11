@@ -4,7 +4,7 @@
   "description": "",
   "main": "./src/server.js",
   "scripts": {
-    "server": "DEBUG=http nodemon",
+    "server": "PORT=3030 DEBUG=http nodemon",
     "prod": "NODE_ENV=production node ./src/server.js",
     "int-test": "jest test/intTest",
     "intw": "jest test/intTest --watch",
