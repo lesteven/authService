@@ -1,5 +1,6 @@
 const express = require('express');
 const debug = require('debug')('http');
+const cors = require('cors');
 
 const { serverSetup, logger } = require('./setup/serverSetup');
 const passportSetup = require('./setup/passportSetup');
@@ -8,6 +9,13 @@ const { sendSuccess, sendError } = require('./utils/serverResponse');
 const errHandle = require('./routes/errHandle');
 
 const app = express();
+
+const corsOptions = {
+  origin: ['http://localhost:8080', 'http://localhost:3000'],
+  credentials: true
+}
+
+app.use(cors(corsOptions));
 
 serverSetup(app);
 passportSetup(app);
