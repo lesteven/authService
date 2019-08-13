@@ -12,6 +12,10 @@ const { logout } = require('../../utils/passportQueries');
 const sessions = express.Router();
 
 sessions.route('/')
+  .get(asyncWrap(async (req, res, next) => {
+    debug('req.user', req.user);
+    res.json({ data: req.user? req.user.username : ''});
+  }))
   .post(checkBody, asyncWrap(async (req, res, next) => {
     logStrategy(passport, res);
     passport.authenticate('login')(req, res, next);

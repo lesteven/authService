@@ -15,7 +15,7 @@ const loginUser = (req, res) => {
     if (err) {
       sendError(res, 400, 'There was an error');
     } else {
-      sendSuccess(res, 201, 'You have logged in');
+      sendSuccess(res, 201, user);
     }
   })
 }
