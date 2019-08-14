@@ -4,6 +4,7 @@ const cors = require('cors');
 
 const { serverSetup, logger } = require('./setup/serverSetup');
 const passportSetup = require('./setup/passportSetup');
+const socketSetup = require('./setup/socketSetup');
 const apiRoutes = require('./routes/apiRoutes');
 const { sendSuccess, sendError } = require('./utils/serverResponse');
 const errHandle = require('./routes/errHandle');
@@ -19,7 +20,7 @@ app.use(cors(corsOptions));
 
 serverSetup(app);
 passportSetup(app);
-
+const server = socketSetup(app);
 
 app.get('/', (req, res) => {
   sendSuccess(res, 200, 'Welcome to auth micoservice');
@@ -41,4 +42,4 @@ if (app.get('env') === 'development') {
 }
 
 
-module.exports = app;
+module.exports = server;
