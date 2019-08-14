@@ -8,6 +8,7 @@ const {
 } = require('./serverResponse');
 const { loginUser } = require('./logStrategy');
 const { logger } = require('../setup/serverSetup');
+const { insertES } = require('./esQueries');
 
 const handleRequest = async (res, req, userDontExist) => {
   debug('userDontExist: ', userDontExist);
@@ -19,6 +20,7 @@ const handleRequest = async (res, req, userDontExist) => {
 
     if (createAccount) {
       loginUser(req, res);
+      insertES(req.body.username);
     } else {
       sendError(res, 500, 'There was a system error');
     }

@@ -14,7 +14,8 @@ const insertUser = async (data) => {
   const query = 'INSERT INTO accounts \
     (id, created_at, password, username) VALUES (?, ?, ?, ?)';
 
-  const { username, password } = data;
+  let { username, password } = data;
+  username = username.toLowerCase();
   const hashedPw = await hashPassword(password);
   const params = [uuid(), Date.now(), hashedPw, username];
 
